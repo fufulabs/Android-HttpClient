@@ -14,9 +14,9 @@ import android.net.Uri;
 import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.http.AsyncHttpRequest;
 import com.koushikdutta.async.http.ConnectionClosedException;
+import com.koushikdutta.async.http.Headers;
 import com.koushikdutta.async.http.body.AsyncHttpRequestBody;
 import com.koushikdutta.async.http.body.MultipartFormDataBody;
-import com.koushikdutta.async.http.libcore.RawHeaders;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.ProgressCallback;
 import com.koushikdutta.ion.Response;
@@ -67,7 +67,7 @@ public class HttpEngineIon<T> extends BaseHttpEngine<T, HttpResponseIon<T>> {
 
 		ion.configure().setAsyncHttpRequestFactory(new AsyncHttpRequestFactory() {
 			@Override
-			public AsyncHttpRequest createAsyncHttpRequest(Uri uri, String method, RawHeaders headers) {
+			public AsyncHttpRequest createAsyncHttpRequest(Uri uri, String method, Headers headers) {
 				AsyncHttpRequest request = new AsyncHttpRequest(uri, method, headers) {
 					@Override
 					public void logd(String message) {
