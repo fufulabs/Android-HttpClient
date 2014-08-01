@@ -11,6 +11,7 @@ import java.nio.charset.Charset;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.levelup.http.HttpRequest;
 import com.levelup.http.InputStreamParser;
 import com.levelup.http.InputStreamStringParser;
@@ -24,8 +25,16 @@ public class InputStreamGsonParser<T> implements InputStreamParser<T> {
 	private final String charset;
 	private boolean debugData;
 
+	public InputStreamGsonParser(Gson gson, TypeToken<T> typeToken) {
+		this(gson, typeToken, "UTF-8");
+	}
+
 	public InputStreamGsonParser(Gson gson, Type type) {
 		this(gson, type, "UTF-8");
+	}
+
+	public InputStreamGsonParser(Gson gson, TypeToken<T> typeToken, String charset) {
+		this(gson, typeToken.getType(), "UTF-8");
 	}
 
 	public InputStreamGsonParser(Gson gson, Type type, String charset) {
