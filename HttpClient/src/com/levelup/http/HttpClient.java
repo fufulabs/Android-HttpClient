@@ -193,17 +193,18 @@ public class HttpClient {
 			throw builder.build();
 
 		} finally {
-			try {
-				request.setResponse(new HttpResponseUrlConnection(connection));
-			} catch (IllegalStateException e) {
-				// okhttp 2.0.0 issue https://github.com/square/okhttp/issues/689
-				LogManager.getLogger().d("connection closed ? for "+request+' '+e);
-				HttpException.Builder builder = request.newException();
-				builder.setErrorMessage("Connection closed "+e.getMessage());
-				builder.setCause(e);
-				builder.setErrorCode(HttpException.ERROR_NETWORK);
-				throw builder.build();
-			}
+			if (null != connection)
+				try {
+					request.setResponse(new HttpResponseUrlConnection(connection));
+				} catch (IllegalStateException e) {
+					// okhttp 2.0.0 issue https://github.com/square/okhttp/issues/689
+					LogManager.getLogger().d("connection closed ? for " + request + ' ' + e);
+					HttpException.Builder builder = request.newException();
+					builder.setErrorMessage("Connection closed " + e.getMessage());
+					builder.setCause(e);
+					builder.setErrorCode(HttpException.ERROR_NETWORK);
+					throw builder.build();
+				}
 		}
 		return connection;
 	}
