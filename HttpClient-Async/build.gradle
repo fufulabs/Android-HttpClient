@@ -3,32 +3,35 @@ apply plugin: 'android-library'
 archivesBaseName = 'HttpClient-Async'
 
 dependencies {
-    compile project(':Android-HttpClient:HttpClient')
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  compile project(':libs:muramasa:library:libs:android-httpclient:HttpClient')
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '19.0.2'
+  compileSdkVersion 19
+  buildToolsVersion '19.1.0'
 
-    defaultConfig {
-        minSdkVersion 7
-        targetSdkVersion 19
+  defaultConfig {
+    minSdkVersion 7
+    targetSdkVersion 19
+  }
+
+  sourceSets {
+    main {
+      manifest.srcFile 'AndroidManifest.xml'
+      java.srcDirs = ['src']
+      resources.srcDirs = ['src']
+      aidl.srcDirs = ['src']
+      renderscript.srcDirs = ['src']
+      res.srcDirs = ['res']
+      assets.srcDirs = ['assets']
     }
+  }
 
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            resources.srcDirs = ['src']
-            aidl.srcDirs = ['src']
-            renderscript.srcDirs = ['src']
-            res.srcDirs = ['res']
-            assets.srcDirs = ['assets']
-        }
-    }
-
+  buildTypes {
     release {
-        runProguard false
-        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+      runProguard false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
     }
+  }
 }
